@@ -3,4 +3,4 @@ layout: default
 permalink: /about
 ---
 
-![PRPic](/assets/PRDylanPicSmall.jpg)
+![PRPic](/assets/images/PRDylanPicSmall.jpg)
