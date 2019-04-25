@@ -9,8 +9,7 @@ The transport of pebbles in a river is smooth and continuous under high flow con
 
 The avalanching, "bursty" nature of pebble transport can be seen in a video of one of the experiments:
 
-<iframe width="640" height="480" src="https://www.youtube-nocookie.com/embed/2EXMzlAxkeA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="640" height="480" src="https://www.youtube-nocookie.com/embed/2EXMzlAxkeA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
 
-  
 As you can see periods of little activity are followed by dramatic transport events. A paper documenting these experiments was published in the journal Earth Surface Dynamics and can be found [here](https://www.earth-surf-dynam.net/6/1089/2018/).
 
