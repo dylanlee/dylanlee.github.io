@@ -1,5 +1,5 @@
 ---
-permalink: /Contact
+permalink: /contact
 ---
 
 Email: dylanblee at gmail dot com
