@@ -1,9 +1,7 @@
 ---
 permalink: /contact
 ---
-
-#
-
+  
 # Contact Me
 
 **Email**: dylanblee *at* gmail *dot* com
