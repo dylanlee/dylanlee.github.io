@@ -2,5 +2,5 @@
 title: How do dunes change shape?
 permalink: /dunes
 header:
-  image: /assets/images/DuneDef.jpg
+  image: /assets/images/DuneTransitionPic.jpg
 ---
