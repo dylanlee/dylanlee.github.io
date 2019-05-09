@@ -9,7 +9,7 @@ header:
 
 ![image-center](/assets/images/DesertSoilsSmall.png){: .align-center}
 
-Geologists commonly treat all soils of a certain size class as having the same erodibility to wind and mechanical disturbance. This approximation breaks down when the soils is moist, under compaction, has formed a crust (2nd picture from right in image above), or has been altered by a combination of these and other factors. 
+Geologists commonly treat all soils of a certain size class as having the same erodibility to wind and mechanical disturbance. This approximation breaks down when the soil is moist, under compaction, has formed a crust (2nd picture from right in image above), or has been altered by a combination of these and other factors. 
 
 ## Measuring real world erodibility is important but difficult
 
