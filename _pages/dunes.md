@@ -5,7 +5,7 @@ header:
   image: /assets/images/DuneTransitionPic.png
 ---
 
-In this project we examine a rare example of a spatial “desertification gradient” at White Sands New Mexico, where active sand dunes slow down and are colonized by plants over a short distance. We show how plants stabilize dunes, by both slowing them down and changing their shape. 
+The picture above shows one example of the myriad of different shapes that dunes can take as they migrate along a dune field in response to wind. In this project we examine a rare example of a spatial “desertification gradient” at White Sands, New Mexico to study how dunes change shape. At White Sands active sand dunes slow down and are colonized by plants over a short distance. We show how plants stabilize dunes, by both slowing them down and changing their shape. 
 
 This is important because sand dunes stabilized by vegetation can be suddenly re-activated due to climate or land-use change, with catastrophic consequences for surrounding communities. These findings are also relevant for rivers and coastal dune settings.
 
