@@ -5,6 +5,6 @@ title: Contact Me
 <p> </p>
 **Email**: dylanblee *at* gmail *dot* com
 
-**LinkedIn**: [https://www.linkedin.com/in/dylan-lee-60812087/](https://www.linkedin.com/in/dylan-lee-60812087/)
+**LinkedIn**: [https://www.linkedin.com/in/dylan-b-lee/](https://www.linkedin.com/in/dylan-b-lee/)
 
 **Github**: [https://github.com/dylanlee](https://github.com/dylanlee)
