@@ -9,4 +9,4 @@ The picture above shows one example of the myriad different shapes that dunes ca
 
 This is important because sand dunes stabilized by vegetation can be suddenly re-activated due to climate or land-use change, with catastrophic consequences for surrounding communities. These findings are also relevant for rivers and coastal dune settings.
 
-We have written up the results of our work in a paper entitled: "The imprint of vegetation on desert dune dynamics." A preprint can be found [here](https://www.dropbox.com/s/00g09ga749vyl7i/White_Sands.pdf?dl=0).
+We have written up the results of our work in a paper entitled: "The imprint of vegetation on desert dune dynamics." It can be found [here](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019GL084177).
