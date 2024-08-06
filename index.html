@@ -85,6 +85,14 @@ const db = FileAttachment("./data/WBDHU8_webproj_test.gpkg")
 return {db};
 }});
 
+define({id: "bc299455", inputs: ["filtered_metrics"], outputs: ["hucarr","huc8String","hucQuery"], body: (filtered_metrics) => {
+//get list of hucs from the filtered metrics table
+const hucarr = filtered_metrics.getChild("huc").toArray()
+const huc8String = hucarr.map(huc => `'${huc}'`).join(',');
+const hucQuery = `select json_object('HUC8', HUC8) AS properties, geom as geometry from WBDHU8_webproj_test where HUC8 in (${huc8String});`;
+return {hucarr,huc8String,hucQuery};
+}});
+
 define({id: "9ad8aace", inputs: ["db","hucQuery"], outputs: ["hucs"], body: (db,hucQuery) => {
 const hucs = db
   .exec(hucQuery)
@@ -108,9 +116,9 @@ const firstCoordinate = firstFeature.geometry.coordinates[0][0];
 return {firstFeature,firstCoordinate};
 }});
 
-define({id: "6a8f77c2", inputs: ["display","L","firstCoordinate","hucs"], outputs: ["div","map"], body: (display,L,firstCoordinate,hucs) => {
+define({id: "0d94fed4", inputs: ["display","L","firstCoordinate","hucs"], outputs: ["div","map"], body: (display,L,firstCoordinate,hucs) => {
 const div = display(document.createElement("div"));
-div.style = "height: 480px;";
+div.style = "height: 600px;";
 const map = L.map(div)
   .setView([firstCoordinate[1], firstCoordinate[0]], 7);
 
@@ -130,24 +138,39 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 return {div,map};
 }});
 
-define({id: "54494eba", inputs: ["view","Inputs","html","comp_version"], outputs: ["columnNames","columnNamesArray","plotpicker","metricpicker","comp_verpicker"], body: (view,Inputs,html,comp_version) => {
+define({id: "4e463dc6", inputs: ["view","Inputs","html"], outputs: ["columnNames","columnNamesArray","plotpicker","metricpicker"], body: (view,Inputs,html) => {
 const columnNames = "false_negatives_count, false_positives_count, true_negatives_count, true_positives_count, ACC, Bal_ACC, CSI, EQUITABLE_THREAT_SCORE, F1_SCORE, FAR, PND, FALSE_OMISSION_RATE, FALSE_POSITIVE_RATE, FOWLKES_MALLOW_INDEX, MCC, NEGATIVE_LIKELIHOOD_RATIO, NPV, BIAS, POSITIVE_LIKELIHOOD_RATIO, PPV, PREVALENCE, PREVALENCE_THRESHOLD, TNR, TPR, contingency_tot_count, TP_perc, FP_perc, TN_perc, FN_perc, cell_area_m2, TP_area_km2, FP_area_km2, TN_area_km2, FN_area_km2, contingency_tot_area_km2, predPositive_area_km2, predNegative_area_km2, obsPositive_area_km2, obsNegative_area_km2, positiveDiff_area_km2, masked_count, masked_perc, masked_area_km2, predPositive_perc, predNegative_perc, obsPositive_perc, obsNegative_perc, positiveDiff_perc";
 const columnNamesArray = columnNames.split(',').map(name => name.trim());
-const plotpicker = view(Inputs.checkbox(["box","dots"],{label: html`<b>Plot type:<b>`,value:["box"]}))
-const metricpicker = view(Inputs.select(columnNamesArray,{label: html`<b>Contingency metric:<b>`}))
-const comp_verpicker = view(Inputs.select(comp_version,{label: html`<b>Comp. version:<b>`,format: (t) => t.version}))
-
-return {columnNames,columnNamesArray,plotpicker,metricpicker,comp_verpicker};
+const plotpicker = view(Inputs.select(["box","dots"],{label: html`<b>Plot type:<b>`,value:["box"]}));
+const metricpicker = view(Inputs.select(columnNamesArray,{label: html`<b>Contingency metric:<b>`}));
+return {columnNames,columnNamesArray,plotpicker,metricpicker};
 }});
 
-define({id: "b4e5685f", inputs: ["plotpicker","display","boxmetrics","dotmetrics"], body: (plotpicker,display,boxmetrics,dotmetrics) => {
-  if (plotpicker[0] == "box"){
+define({id: "840a31cc", inputs: ["view","Inputs","comp_version","html","filtered_metrics"], outputs: ["comp_verpicker","sel_mags","magpicker"], body: (view,Inputs,comp_version,html,filtered_metrics) => {
+const comp_verpicker = view(Inputs.select(comp_version,{label: html`<b>Comp. version:<b>`,format: (t) => t.version}));
+// array of magnitudes present in current view of metrics table
+const sel_mags = [...new Set(filtered_metrics.getChild("magnitude").toArray())];
+// create picker using this sources magnitudes
+const magpicker = view(Inputs.checkbox(sel_mags,{label: html`<b>Magnitude:<b>`, value: sel_mags}));
+return {comp_verpicker,sel_mags,magpicker};
+}});
+
+define({id: "414db636", inputs: ["magpicker"], outputs: ["magstring"], body: (magpicker) => {
+// turn picker array into a string for queries
+const magstring = magpicker.map(m => `'${m}'`).join(", ");
+return {magstring};
+}});
+
+define({id: "80ca3633", inputs: ["plotpicker","display","legend","boxmetrics","dotmetrics"], body: (plotpicker,display,legend,boxmetrics,dotmetrics) => {
+  if (plotpicker == "box"){
+  display(legend);
   display(boxmetrics);
   } else{
+  display(legend);
   display(dotmetrics)};
 }});
 
-define({id: "12298d99", inputs: ["Plot","filtered_metrics","metricpicker","ver_comp_metrics"], outputs: ["boxmetrics"], body: (Plot,filtered_metrics,metricpicker,ver_comp_metrics) => {
+define({id: "75cb7935", inputs: ["Plot","plot_metrics","metricpicker","plot_comp_metrics"], outputs: ["boxmetrics"], body: (Plot,plot_metrics,metricpicker,plot_comp_metrics) => {
 const boxmetrics =  Plot.plot({
     height: 400,
     y: {
@@ -155,29 +178,45 @@ const boxmetrics =  Plot.plot({
       nice: true
       },
     marks: [
-      Plot.boxY(filtered_metrics, {x: "magnitude", y: metricpicker, fill: "rgb(0, 0, 255)",fillOpacity: 0.5 }),
-      Plot.boxY(ver_comp_metrics, {x: "magnitude", y: metricpicker, fill: "rgb(0,255,0)",fillOpacity: 0.5 }),
+      Plot.boxY(plot_metrics, {x: "magnitude", y: metricpicker, fill: "rgb(0, 0, 255)",fillOpacity: 0.5 }),
+      Plot.boxY(plot_comp_metrics, {x: "magnitude", y: metricpicker, fill: "rgb(0,255,0)",fillOpacity: 0.5 }),
     ]
   })
 return {boxmetrics};
 }});
 
-define({id: "636b9b28", inputs: ["Plot","filtered_metrics","metricpicker","ver_comp_metrics"], outputs: ["dotmetrics"], body: (Plot,filtered_metrics,metricpicker,ver_comp_metrics) => {
+define({id: "a0cbd5a8", inputs: ["Plot","plot_metrics","metricpicker","plot_comp_metrics"], outputs: ["dotmetrics"], body: (Plot,plot_metrics,metricpicker,plot_comp_metrics) => {
 const dotmetrics =  Plot.plot({
     height: 400,
     x: {
-      type: "linear",
-      nice: true
+      type: "point"
       },
     y: {
-      type: "point"
+      type: "linear",
+      nice: true
     },
     marks: [
-      Plot.dot(filtered_metrics, {x: metricpicker, y: "huc", fill: "rgb(0, 0, 255)",fillOpacity: 0.5 }),
-      Plot.dot(ver_comp_metrics, {x: metricpicker, y: "huc", fill: "rgb(0,255,0)",fillOpacity: 0.5 }),
+      Plot.dot(plot_metrics, {x: "huc", y: metricpicker, fill: "rgb(0, 0, 255)",fillOpacity: 0.5 }),
+      Plot.dot(plot_comp_metrics, {x: "huc", y: metricpicker, fill: "rgb(0,255,0)",fillOpacity: 0.5 }),
     ]
   })
 return {dotmetrics};
+}});
+
+define({id: "0d41d878", inputs: ["Plot"], outputs: ["legendItems","legend"], body: (Plot) => {
+// Define legend 
+const legendItems = [
+  {color: "rgb(0, 0, 255)", label: "Metrics"},
+  {color: "rgb(0, 255, 0)", label: "Comparison Metrics"}
+];
+
+const legend = Plot.legend({
+  color: {
+    domain: legendItems.map(d => d.label),
+    range: legendItems.map(d => d.color)
+  }
+});
+return {legendItems,legend};
 }});
 
 define({id: "4e1ed80b", inputs: ["sql"], outputs: ["version"], body: async (sql) => {
@@ -234,11 +273,14 @@ WHERE version = ${comp_verpicker.toArray()[0]} AND ver_env = ${ver_envpicker[0]}
 return {ver_comp_metrics};
 }});
 
-define({id: "e6e522f1", inputs: ["filtered_metrics"], outputs: ["hucarr","huc8String","hucQuery"], body: (filtered_metrics) => {
-const hucarr = filtered_metrics.getChild("huc").toArray()
-const huc8String = hucarr.map(huc => `'${huc}'`).join(',');
-const hucQuery = `select json_object('HUC8', HUC8) AS properties, geom as geometry from WBDHU8_webproj_test where HUC8 in (${huc8String});`;
-return {hucarr,huc8String,hucQuery};
+define({id: "a0cac165", inputs: ["sql","versionpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_metrics"], body: async (sql,versionpicker,ver_envpicker,categorypicker,magstring) => {
+const plot_metrics = await sql([`SELECT * FROM metrics WHERE version = '${versionpicker.toArray()[0]}' AND ver_env = '${ver_envpicker[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
+return {plot_metrics};
+}});
+
+define({id: "79cc592e", inputs: ["sql","comp_verpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_comp_metrics"], body: async (sql,comp_verpicker,ver_envpicker,categorypicker,magstring) => {
+const plot_comp_metrics = await sql([`SELECT * FROM metrics WHERE version = '${comp_verpicker.toArray()[0]}' AND ver_env = '${ver_envpicker[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
+return {plot_comp_metrics};
 }});
 
 </script>
@@ -251,21 +293,29 @@ return {hucarr,huc8String,hucQuery};
 <h1 id="cross-site-contingency-metrics" tabindex="-1"><a class="observablehq-header-anchor" href="#cross-site-contingency-metrics">Cross-site contingency metrics</a></h1>
 <div class="observablehq observablehq--block"><!--:fc3db64d:--></div>
 <div class="observablehq observablehq--block"><!--:2540ab01:--></div>
+<div class="observablehq observablehq--block"><!--:bc299455:--></div>
 <div class="observablehq observablehq--block"><!--:9ad8aace:--></div>
 <div class="observablehq observablehq--block"><!--:bd109c40:--></div>
 <div class="observablehq observablehq--block"><!--:65280403:--></div>
 <!-- cards for map area and plots-->
-<div class="grid grid-cols-4">
-  <div class="card grid-colspan-2">
-<div class="observablehq observablehq--block"><!--:6a8f77c2:--></div>
+<div class="grid grid-cols-4" style="grid-auto-rows: auto;">
+  <div class="card grid-colspan-2 grid-rowspan-3">
+<div class="observablehq observablehq--block"><!--:0d94fed4:--></div>
   </div>
-  <div class="card grid-colspan-2">
-<div class="observablehq observablehq--block"><!--:54494eba:--></div>
-<div class="observablehq observablehq--block"><!--:b4e5685f:--></div>
+  <div class="card grid-colspan-1" style="max-height: 100px">
+<div class="observablehq observablehq--block"><!--:4e463dc6:--></div>
+  </div>
+  <div class="card grid-colspan-1" style="max-height: 100px">
+<div class="observablehq observablehq--block"><!--:840a31cc:--></div>
+<div class="observablehq observablehq--block"><!--:414db636:--></div>
+  </div>
+  <div class="card grid-colspan-2 grid-rowspan-2" style="display: flex; flex-direction: row; justify-content: center">
+<div class="observablehq observablehq--block"><!--:80ca3633:--></div>
   </div>
 </div>
-<div class="observablehq observablehq--block"><!--:12298d99:--></div>
-<div class="observablehq observablehq--block"><!--:636b9b28:--></div>
+<div class="observablehq observablehq--block"><!--:75cb7935:--></div>
+<div class="observablehq observablehq--block"><!--:a0cbd5a8:--></div>
+<div class="observablehq observablehq--block"><!--:0d41d878:--></div>
 <div class="observablehq observablehq--block"><!--:4e1ed80b:--></div>
 <div class="observablehq observablehq--block"><!--:534792dd:--></div>
 <div class="observablehq observablehq--block"><!--:e2be9f46:--></div>
@@ -284,12 +334,10 @@ return {hucarr,huc8String,hucQuery};
 </div>
 <div class="observablehq observablehq--block"><!--:96815180:--></div>
 <div class="observablehq observablehq--block"><!--:0885867a:--></div>
-<div class="observablehq observablehq--block"><!--:e6e522f1:--></div>
-<!-- ```js -->
-<!-- plotpicker[0]=="box" -->
-<!-- ``` -->
+<div class="observablehq observablehq--block"><!--:a0cac165:--></div>
+<div class="observablehq observablehq--block"><!--:79cc592e:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-06T11:23:16">Aug 6, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-06T16:35:05">Aug 6, 2024</a>.</div>
 </footer>
 </div>
