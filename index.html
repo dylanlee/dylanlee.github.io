@@ -266,13 +266,6 @@ WHERE version = ${versionpicker.toArray()[0]} AND ver_env = ${ver_envpicker[0]} 
 return {filtered_metrics};
 }});
 
-define({id: "0885867a", inputs: ["sql","comp_verpicker","ver_envpicker","categorypicker"], outputs: ["ver_comp_metrics"], body: async (sql,comp_verpicker,ver_envpicker,categorypicker) => {
-const ver_comp_metrics = await sql`SELECT *
-FROM metrics
-WHERE version = ${comp_verpicker.toArray()[0]} AND ver_env = ${ver_envpicker[0]} AND benchmark_source = ${categorypicker.toArray()[0]};`;
-return {ver_comp_metrics};
-}});
-
 define({id: "a0cac165", inputs: ["sql","versionpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_metrics"], body: async (sql,versionpicker,ver_envpicker,categorypicker,magstring) => {
 const plot_metrics = await sql([`SELECT * FROM metrics WHERE version = '${versionpicker.toArray()[0]}' AND ver_env = '${ver_envpicker[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
 return {plot_metrics};
@@ -321,7 +314,7 @@ return {plot_comp_metrics};
 <div class="observablehq observablehq--block"><!--:e2be9f46:--></div>
 <div class="observablehq observablehq--block"><!--:1946849c:--></div>
 <div class="observablehq observablehq--block"><!--:c438bfd5:--></div>
-<div class="grid" style="display: flex; flex-direction: row; align-items: center; justify-content: left">
+<div class="grid card" style="display: flex; flex-direction: row; align-items: center; justify-content: left">
   <div>
 <div class="observablehq observablehq--block"><!--:7b3ab96c:--></div>
   </div>
@@ -333,11 +326,10 @@ return {plot_comp_metrics};
   </div>
 </div>
 <div class="observablehq observablehq--block"><!--:96815180:--></div>
-<div class="observablehq observablehq--block"><!--:0885867a:--></div>
 <div class="observablehq observablehq--block"><!--:a0cac165:--></div>
 <div class="observablehq observablehq--block"><!--:79cc592e:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-06T16:35:05">Aug 6, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-06T16:54:46">Aug 6, 2024</a>.</div>
 </footer>
 </div>
