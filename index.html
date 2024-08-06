@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Cross site metrics | eval metrics panel</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight,alt,wide.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.css">
+<link rel="preload" as="style" href="./_npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.css">
+<link rel="stylesheet" type="text/css" href="./_npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/duckdb.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.js">
+<link rel="modulepreload" href="./_npm/leaflet@1.9.4/_esm.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.15/_esm.js">
+<link rel="modulepreload" href="./_npm/@duckdb/duckdb-wasm@1.28.0/_esm.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/_esm.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/apache-arrow@17.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/_esm.js">
+<link rel="modulepreload" href="./_npm/tslib@2.6.3/_esm.js">
+<link rel="modulepreload" href="./_npm/flatbuffers@24.3.25/_esm.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/_esm.js">
+<link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+import {registerFile, FileAttachment} from "./_observablehq/stdlib.js";
+import {registerTable} from "./_observablehq/stdlib/duckdb.js";
+
+registerFile("./data/WBDHU8_webproj_test.gpkg", {"name":"./data/WBDHU8_webproj_test.gpkg","path":"./_file/data/WBDHU8_webproj_test.7313df30.gpkg","lastModified":1722957272725});
+registerFile("./data/master_metrics.csv", {"name":"./data/master_metrics.csv","mimeType":"text/csv","path":"./_file/data/master_metrics.93ee5ea2.csv","lastModified":1722797733661});
+registerTable("metrics", FileAttachment("./data/master_metrics.csv"));
+
+define({id: "fc3db64d", outputs: ["spl"], body: () => {
+const spl = import("https://cdn.skypack.dev/spl.js@0.1.0-beta.5?min").then((d) =>
+  d.default()
+)
+return {spl};
+}});
+
+define({id: "2540ab01", inputs: ["FileAttachment","spl"], outputs: ["db"], body: (FileAttachment,spl) => {
+const db = FileAttachment("./data/WBDHU8_webproj_test.gpkg")
+  .arrayBuffer()
+  .then((buffer) => spl.db(buffer))
+return {db};
+}});
+
+define({id: "9ad8aace", inputs: ["db","hucQuery"], outputs: ["hucs"], body: (db,hucQuery) => {
+const hucs = db
+  .exec(hucQuery)
+  .get.objs.then((d) => ({ type: "FeatureCollection", features: d }))
+return {hucs};
+}});
+
+define({id: "bd109c40", inputs: ["hucs"], body: (hucs) => {
+// Add "type": "Feature" to each feature to make it a valid geojson feature collection
+hucs.features = hucs.features.map(feature => {
+  return {
+    "type": "Feature",
+    ...feature
+  };
+});
+}});
+
+define({id: "65280403", inputs: ["hucs"], outputs: ["firstFeature","firstCoordinate"], body: (hucs) => {
+const firstFeature = hucs.features[0];
+const firstCoordinate = firstFeature.geometry.coordinates[0][0];
+return {firstFeature,firstCoordinate};
+}});
+
+define({id: "6a8f77c2", inputs: ["display","L","firstCoordinate","hucs"], outputs: ["div","map"], body: (display,L,firstCoordinate,hucs) => {
+const div = display(document.createElement("div"));
+div.style = "height: 480px;";
+const map = L.map(div)
+  .setView([firstCoordinate[1], firstCoordinate[0]], 7);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+})
+  .addTo(map);
+
+// Add GeoJSON data to the map
+  L.geoJSON(hucs, {
+    onEachFeature: function (feature, layer) {
+      if (feature.properties) {
+        layer.bindPopup("HUC8: " + feature.properties.HUC8);
+      }
+    }
+  }).addTo(map);
+return {div,map};
+}});
+
+define({id: "54494eba", inputs: ["view","Inputs","html","comp_version"], outputs: ["columnNames","columnNamesArray","plotpicker","metricpicker","comp_verpicker"], body: (view,Inputs,html,comp_version) => {
+const columnNames = "false_negatives_count, false_positives_count, true_negatives_count, true_positives_count, ACC, Bal_ACC, CSI, EQUITABLE_THREAT_SCORE, F1_SCORE, FAR, PND, FALSE_OMISSION_RATE, FALSE_POSITIVE_RATE, FOWLKES_MALLOW_INDEX, MCC, NEGATIVE_LIKELIHOOD_RATIO, NPV, BIAS, POSITIVE_LIKELIHOOD_RATIO, PPV, PREVALENCE, PREVALENCE_THRESHOLD, TNR, TPR, contingency_tot_count, TP_perc, FP_perc, TN_perc, FN_perc, cell_area_m2, TP_area_km2, FP_area_km2, TN_area_km2, FN_area_km2, contingency_tot_area_km2, predPositive_area_km2, predNegative_area_km2, obsPositive_area_km2, obsNegative_area_km2, positiveDiff_area_km2, masked_count, masked_perc, masked_area_km2, predPositive_perc, predNegative_perc, obsPositive_perc, obsNegative_perc, positiveDiff_perc";
+const columnNamesArray = columnNames.split(',').map(name => name.trim());
+const plotpicker = view(Inputs.checkbox(["box","dots"],{label: html`<b>Plot type:<b>`,value:["box"]}))
+const metricpicker = view(Inputs.select(columnNamesArray,{label: html`<b>Contingency metric:<b>`}))
+const comp_verpicker = view(Inputs.select(comp_version,{label: html`<b>Comp. version:<b>`,format: (t) => t.version}))
+
+return {columnNames,columnNamesArray,plotpicker,metricpicker,comp_verpicker};
+}});
+
+define({id: "b4e5685f", inputs: ["plotpicker","display","boxmetrics","dotmetrics"], body: (plotpicker,display,boxmetrics,dotmetrics) => {
+  if (plotpicker[0] == "box"){
+  display(boxmetrics);
+  } else{
+  display(dotmetrics)};
+}});
+
+define({id: "12298d99", inputs: ["Plot","filtered_metrics","metricpicker","ver_comp_metrics"], outputs: ["boxmetrics"], body: (Plot,filtered_metrics,metricpicker,ver_comp_metrics) => {
+const boxmetrics =  Plot.plot({
+    height: 400,
+    y: {
+      type: "linear",
+      nice: true
+      },
+    marks: [
+      Plot.boxY(filtered_metrics, {x: "magnitude", y: metricpicker, fill: "rgb(0, 0, 255)",fillOpacity: 0.5 }),
+      Plot.boxY(ver_comp_metrics, {x: "magnitude", y: metricpicker, fill: "rgb(0,255,0)",fillOpacity: 0.5 }),
+    ]
+  })
+return {boxmetrics};
+}});
+
+define({id: "636b9b28", inputs: ["Plot","filtered_metrics","metricpicker","ver_comp_metrics"], outputs: ["dotmetrics"], body: (Plot,filtered_metrics,metricpicker,ver_comp_metrics) => {
+const dotmetrics =  Plot.plot({
+    height: 400,
+    x: {
+      type: "linear",
+      nice: true
+      },
+    y: {
+      type: "point"
+    },
+    marks: [
+      Plot.dot(filtered_metrics, {x: metricpicker, y: "huc", fill: "rgb(0, 0, 255)",fillOpacity: 0.5 }),
+      Plot.dot(ver_comp_metrics, {x: metricpicker, y: "huc", fill: "rgb(0,255,0)",fillOpacity: 0.5 }),
+    ]
+  })
+return {dotmetrics};
+}});
+
+define({id: "4e1ed80b", inputs: ["sql"], outputs: ["version"], body: async (sql) => {
+const version = await sql`SELECT DISTINCT version FROM metrics`;
+return {version};
+}});
+
+define({id: "534792dd", inputs: ["sql"], outputs: ["comp_version"], body: async (sql) => {
+const comp_version = await sql`SELECT DISTINCT version FROM metrics`;
+return {comp_version};
+}});
+
+define({id: "e2be9f46", inputs: ["sql"], outputs: ["benchcat"], body: async (sql) => {
+const benchcat = await sql`SELECT DISTINCT benchmark_source FROM metrics`;
+return {benchcat};
+}});
+
+define({id: "1946849c", inputs: ["sql"], outputs: ["ver_env"], body: async (sql) => {
+const ver_env = await sql`SELECT DISTINCT ver_env FROM metrics`;
+return {ver_env};
+}});
+
+define({id: "c438bfd5", inputs: ["sql"], outputs: ["calibrated"], body: async (sql) => {
+const calibrated = await sql`SELECT DISTINCT calibrated FROM metrics`;
+return {calibrated};
+}});
+
+define({id: "7b3ab96c", inputs: ["view","Inputs","version","html"], outputs: ["versionpicker"], body: (view,Inputs,version,html) => {
+const versionpicker = view(Inputs.select(version,{label: html`<b>HAND version:<b>`,format: (t) => t.version}))
+return {versionpicker};
+}});
+
+define({id: "9f0f7613", inputs: ["view","Inputs","benchcat","html"], outputs: ["categorypicker"], body: (view,Inputs,benchcat,html) => {
+const categorypicker = view(Inputs.select(benchcat,{label: html`<b>Benchmark category:<b>`,format: (t) => t.benchmark_source}))
+return {categorypicker};
+}});
+
+define({id: "6b532f09", inputs: ["view","Inputs","ver_env","html"], outputs: ["ver_envpicker"], body: (view,Inputs,ver_env,html) => {
+const ver_envpicker = view(Inputs.checkbox([ver_env.get(0).toArray()[0],ver_env.get(1).toArray()[0]],{label: html`<b>Version stage:<b>`,value:[ver_env.get(0).toArray()[0]]}))
+return {ver_envpicker};
+}});
+
+define({id: "96815180", inputs: ["display","Inputs","sql","versionpicker","ver_envpicker","categorypicker"], outputs: ["filtered_metrics"], body: async (display,Inputs,sql,versionpicker,ver_envpicker,categorypicker) => {
+const filtered_metrics = ((_) => (display(Inputs.table(_)), _))(await sql`SELECT huc, lid, magnitude, calibrated, false_negatives_count, false_positives_count, true_negatives_count, true_positives_count, ACC, Bal_ACC, CSI, EQUITABLE_THREAT_SCORE, F1_SCORE, FAR, PND, FALSE_OMISSION_RATE, FALSE_POSITIVE_RATE, FOWLKES_MALLOW_INDEX, MCC, NEGATIVE_LIKELIHOOD_RATIO, NPV, BIAS, POSITIVE_LIKELIHOOD_RATIO, PPV, PREVALENCE, PREVALENCE_THRESHOLD, TNR, TPR, contingency_tot_count, TP_perc, FP_perc, TN_perc, FN_perc, cell_area_m2, TP_area_km2, FP_area_km2, TN_area_km2, FN_area_km2, contingency_tot_area_km2, predPositive_area_km2, predNegative_area_km2, obsPositive_area_km2, obsNegative_area_km2, positiveDiff_area_km2, masked_count, masked_perc, masked_area_km2, predPositive_perc, predNegative_perc, obsPositive_perc, obsNegative_perc, positiveDiff_perc
+FROM metrics
+WHERE version = ${versionpicker.toArray()[0]} AND ver_env = ${ver_envpicker[0]} AND benchmark_source = ${categorypicker.toArray()[0]};`);
+return {filtered_metrics};
+}});
+
+define({id: "0885867a", inputs: ["sql","comp_verpicker","ver_envpicker","categorypicker"], outputs: ["ver_comp_metrics"], body: async (sql,comp_verpicker,ver_envpicker,categorypicker) => {
+const ver_comp_metrics = await sql`SELECT *
+FROM metrics
+WHERE version = ${comp_verpicker.toArray()[0]} AND ver_env = ${ver_envpicker[0]} AND benchmark_source = ${categorypicker.toArray()[0]};`;
+return {ver_comp_metrics};
+}});
+
+define({id: "e6e522f1", inputs: ["filtered_metrics"], outputs: ["hucarr","huc8String","hucQuery"], body: (filtered_metrics) => {
+const hucarr = filtered_metrics.getChild("huc").toArray()
+const huc8String = hucarr.map(huc => `'${huc}'`).join(',');
+const hucQuery = `select json_object('HUC8', HUC8) AS properties, geom as geometry from WBDHU8_webproj_test where HUC8 in (${huc8String});`;
+return {hucarr,huc8String,hucQuery};
+}});
+
+</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type)[id], h2:first-child[id], :not(h1) + h2[id]">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="cross-site-contingency-metrics" tabindex="-1"><a class="observablehq-header-anchor" href="#cross-site-contingency-metrics">Cross-site contingency metrics</a></h1>
+<div class="observablehq observablehq--block"><!--:fc3db64d:--></div>
+<div class="observablehq observablehq--block"><!--:2540ab01:--></div>
+<div class="observablehq observablehq--block"><!--:9ad8aace:--></div>
+<div class="observablehq observablehq--block"><!--:bd109c40:--></div>
+<div class="observablehq observablehq--block"><!--:65280403:--></div>
+<!-- cards for map area and plots-->
+<div class="grid grid-cols-4">
+  <div class="card grid-colspan-2">
+<div class="observablehq observablehq--block"><!--:6a8f77c2:--></div>
+  </div>
+  <div class="card grid-colspan-2">
+<div class="observablehq observablehq--block"><!--:54494eba:--></div>
+<div class="observablehq observablehq--block"><!--:b4e5685f:--></div>
+  </div>
+</div>
+<div class="observablehq observablehq--block"><!--:12298d99:--></div>
+<div class="observablehq observablehq--block"><!--:636b9b28:--></div>
+<div class="observablehq observablehq--block"><!--:4e1ed80b:--></div>
+<div class="observablehq observablehq--block"><!--:534792dd:--></div>
+<div class="observablehq observablehq--block"><!--:e2be9f46:--></div>
+<div class="observablehq observablehq--block"><!--:1946849c:--></div>
+<div class="observablehq observablehq--block"><!--:c438bfd5:--></div>
+<div class="grid" style="display: flex; flex-direction: row; align-items: center; justify-content: left">
+  <div>
+<div class="observablehq observablehq--block"><!--:7b3ab96c:--></div>
+  </div>
+  <div>
+<div class="observablehq observablehq--block"><!--:9f0f7613:--></div>
+  </div>
+  <div>
+<div class="observablehq observablehq--block"><!--:6b532f09:--></div>
+  </div>
+</div>
+<div class="observablehq observablehq--block"><!--:96815180:--></div>
+<div class="observablehq observablehq--block"><!--:0885867a:--></div>
+<div class="observablehq observablehq--block"><!--:e6e522f1:--></div>
+<!-- ```js -->
+<!-- plotpicker[0]=="box" -->
+<!-- ``` -->
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-06T11:23:16">Aug 6, 2024</a>.</div>
+</footer>
+</div>
