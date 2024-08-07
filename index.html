@@ -254,25 +254,25 @@ const categorypicker = view(Inputs.select(benchcat,{label: html`<b>Benchmark cat
 return {categorypicker};
 }});
 
-define({id: "6b532f09", inputs: ["view","Inputs","ver_env","html"], outputs: ["ver_envpicker"], body: (view,Inputs,ver_env,html) => {
-const ver_envpicker = view(Inputs.checkbox([ver_env.get(0).toArray()[0],ver_env.get(1).toArray()[0]],{label: html`<b>Version stage:<b>`,value:[ver_env.get(0).toArray()[0]]}))
+define({id: "4891b83f", inputs: ["view","Inputs","ver_env","html"], outputs: ["ver_envpicker"], body: (view,Inputs,ver_env,html) => {
+const ver_envpicker = view(Inputs.select(ver_env,{label: html`<b>Version stage:<b>`,format: (t) => t.ver_env}))
 return {ver_envpicker};
 }});
 
-define({id: "96815180", inputs: ["display","Inputs","sql","versionpicker","ver_envpicker","categorypicker"], outputs: ["filtered_metrics"], body: async (display,Inputs,sql,versionpicker,ver_envpicker,categorypicker) => {
+define({id: "53541312", inputs: ["display","Inputs","sql","versionpicker","ver_envpicker","categorypicker"], outputs: ["filtered_metrics"], body: async (display,Inputs,sql,versionpicker,ver_envpicker,categorypicker) => {
 const filtered_metrics = ((_) => (display(Inputs.table(_)), _))(await sql`SELECT huc, lid, magnitude, calibrated, false_negatives_count, false_positives_count, true_negatives_count, true_positives_count, ACC, Bal_ACC, CSI, EQUITABLE_THREAT_SCORE, F1_SCORE, FAR, PND, FALSE_OMISSION_RATE, FALSE_POSITIVE_RATE, FOWLKES_MALLOW_INDEX, MCC, NEGATIVE_LIKELIHOOD_RATIO, NPV, BIAS, POSITIVE_LIKELIHOOD_RATIO, PPV, PREVALENCE, PREVALENCE_THRESHOLD, TNR, TPR, contingency_tot_count, TP_perc, FP_perc, TN_perc, FN_perc, cell_area_m2, TP_area_km2, FP_area_km2, TN_area_km2, FN_area_km2, contingency_tot_area_km2, predPositive_area_km2, predNegative_area_km2, obsPositive_area_km2, obsNegative_area_km2, positiveDiff_area_km2, masked_count, masked_perc, masked_area_km2, predPositive_perc, predNegative_perc, obsPositive_perc, obsNegative_perc, positiveDiff_perc
 FROM metrics
-WHERE version = ${versionpicker.toArray()[0]} AND ver_env = ${ver_envpicker[0]} AND benchmark_source = ${categorypicker.toArray()[0]};`);
+WHERE version = ${versionpicker.toArray()[0]} AND ver_env = ${ver_envpicker.toArray()[0]} AND benchmark_source = ${categorypicker.toArray()[0]};`);
 return {filtered_metrics};
 }});
 
-define({id: "a0cac165", inputs: ["sql","versionpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_metrics"], body: async (sql,versionpicker,ver_envpicker,categorypicker,magstring) => {
-const plot_metrics = await sql([`SELECT * FROM metrics WHERE version = '${versionpicker.toArray()[0]}' AND ver_env = '${ver_envpicker[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
+define({id: "a90d29c6", inputs: ["sql","versionpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_metrics"], body: async (sql,versionpicker,ver_envpicker,categorypicker,magstring) => {
+const plot_metrics = await sql([`SELECT * FROM metrics WHERE version = '${versionpicker.toArray()[0]}' AND ver_env = '${ver_envpicker.toArray()[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
 return {plot_metrics};
 }});
 
-define({id: "79cc592e", inputs: ["sql","comp_verpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_comp_metrics"], body: async (sql,comp_verpicker,ver_envpicker,categorypicker,magstring) => {
-const plot_comp_metrics = await sql([`SELECT * FROM metrics WHERE version = '${comp_verpicker.toArray()[0]}' AND ver_env = '${ver_envpicker[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
+define({id: "86bf9848", inputs: ["sql","comp_verpicker","ver_envpicker","categorypicker","magstring"], outputs: ["plot_comp_metrics"], body: async (sql,comp_verpicker,ver_envpicker,categorypicker,magstring) => {
+const plot_comp_metrics = await sql([`SELECT * FROM metrics WHERE version = '${comp_verpicker.toArray()[0]}' AND ver_env = '${ver_envpicker.toArray()[0]}' AND benchmark_source = '${categorypicker.toArray()[0]}' AND magnitude IN (${magstring})`])
 return {plot_comp_metrics};
 }});
 
@@ -322,14 +322,14 @@ return {plot_comp_metrics};
 <div class="observablehq observablehq--block"><!--:9f0f7613:--></div>
   </div>
   <div>
-<div class="observablehq observablehq--block"><!--:6b532f09:--></div>
+<div class="observablehq observablehq--block"><!--:4891b83f:--></div>
   </div>
 </div>
-<div class="observablehq observablehq--block"><!--:96815180:--></div>
-<div class="observablehq observablehq--block"><!--:a0cac165:--></div>
-<div class="observablehq observablehq--block"><!--:79cc592e:--></div>
+<div class="observablehq observablehq--block"><!--:53541312:--></div>
+<div class="observablehq observablehq--block"><!--:a90d29c6:--></div>
+<div class="observablehq observablehq--block"><!--:86bf9848:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-06T16:54:46">Aug 6, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-08-07T09:41:21">Aug 7, 2024</a>.</div>
 </footer>
 </div>
